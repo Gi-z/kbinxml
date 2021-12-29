@@ -408,7 +408,10 @@ class KBinXML():
                 string = ' '.join(map(nodeFormat.get('toStr', str), data))
 
             # some strings have extra NUL bytes, compatible behaviour is to strip
-            node.text = string.strip('\0')
+            try:
+                node.text = string.strip('\0')
+            except ValueError as e:
+                node.text = "NULL"
 
         # because we need the 'real' root
         self.xml_doc = self.xml_doc[0]
